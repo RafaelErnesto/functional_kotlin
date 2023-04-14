@@ -10,6 +10,12 @@ fun <T> printAll(data: Array<T>) {
     loop(0)
 }
 
+
+fun <A, B, C> curry(f: (A, B) -> C): (A) -> (B) -> C {
+    return { a:A -> { b:B -> f(a,b)} }
+}
+
+
 fun main(){
     val intArray = arrayOf(1,2,3,5,9)
     printAll(intArray)
@@ -17,4 +23,7 @@ fun main(){
     printAll(doubleArray)
     val stringArray = arrayOf("Hi","Bye","Good","Yes")
     printAll(stringArray)
+
+    val curryResult = curry { a: Int, b: Double -> "Arguments are $a and $b" }(1)(1.5)
+    println("Result of curry function: $curryResult")
 }
