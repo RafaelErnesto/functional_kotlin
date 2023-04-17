@@ -19,6 +19,10 @@ fun <A, B, C> uncurry(f: (A) -> (B) -> C): (A,B) -> C {
      return { a:A,b:B -> f(a)(b) }
 }
 
+fun <A, B, C> compose(f: (B) -> C, g: (A) -> B): (A) -> C {
+    return { a:A -> f(g(a)) }
+}
+
 
 fun main(){
     val intArray = arrayOf(1,2,3,5,9)
