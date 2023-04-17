@@ -15,6 +15,10 @@ fun <A, B, C> curry(f: (A, B) -> C): (A) -> (B) -> C {
     return { a:A -> { b:B -> f(a,b)} }
 }
 
+fun <A, B, C> uncurry(f: (A) -> (B) -> C): (A,B) -> C {
+     return { a:A,b:B -> f(a)(b) }
+}
+
 
 fun main(){
     val intArray = arrayOf(1,2,3,5,9)
