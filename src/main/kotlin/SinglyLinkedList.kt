@@ -78,6 +78,9 @@ sealed class List<out A> {
 
         fun lengthTailRec(list: List<Int>): Int =
             foldLeft(list, 0) { b, _ -> b + 1 }
+
+        fun reverse(list: List<Int>): List<Int> =
+            foldLeft(list, Cons(0, Nil)) { a, b -> Cons(b, a) }
     }
 }
 
@@ -91,5 +94,6 @@ fun main() {
     println("Length is $length")
     println("The sumTailRec is ${List.sumTailRec(myList)}")
     println("The lengthTailRec is ${List.lengthTailRec(myList)}")
+    println(List.reverse(myList))
 }
 
