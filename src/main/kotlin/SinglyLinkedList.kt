@@ -57,15 +57,39 @@ sealed class List<out A> {
             }
         }
 
+        tailrec fun <A, B> foldLeft(list: List<A>, z: B, fn: (B, A) -> B): B {
+            return when(list) {
+                is Nil -> z
+                is Cons -> foldLeft(list.tail, fn(z, list.head), fn)
+            }
+        }
+
         fun sum(list: List<Int>): Int =
             foldRight(list, 0) { a, b -> a + b }
 
+        fun sumTailRec(list: List<Int>) =
+           foldLeft(list, 0) { b, a -> a + b }
+
         fun product(list: List<Int>): Double =
             foldRight(list, 1.0) { a, b -> a * b }
+
+        fun length(list: List<Int>): Int =
+            foldRight(list, 0) {_, b ->  b + 1}
+
+        fun lengthTailRec(list: List<Int>): Int =
+            foldLeft(list, 0) { b, _ -> b + 1 }
     }
 }
 
 object Nil: List<Nothing>()
 
 data class Cons<out A>(val head: A, val tail: List<A>): List<A>()
+
+fun main() {
+    val myList = Cons(1, Cons(2, Cons(3, Cons(4, Nil))))
+    val length = List.length(myList)
+    println("Length is $length")
+    println("The sumTailRec is ${List.sumTailRec(myList)}")
+    println("The lengthTailRec is ${List.lengthTailRec(myList)}")
+}
 
