@@ -50,12 +50,15 @@ sealed class List<out A> {
             return Cons(list.head, returnedList)
         }
 
-        fun <A, B> foldRight(list: List<A>, z: B, fn: (A,B) -> B): B {
+        fun <A, B> foldRight(list: List<A>, z: B, fn: (A, B) -> B): B {
             return when(list) {
                 is Nil -> z
                 is Cons -> fn(list.head, foldRight(list.tail, z, fn))
             }
         }
+
+        fun <A, B> foldRightTailRec(list: List<A>, z: B, fn: (A, B) -> B): B =
+            foldLeft(list, z) { a, b -> fn(b, a) }
 
         tailrec fun <A, B> foldLeft(list: List<A>, z: B, fn: (B, A) -> B): B {
             return when(list) {
@@ -63,6 +66,9 @@ sealed class List<out A> {
                 is Cons -> foldLeft(list.tail, fn(z, list.head), fn)
             }
         }
+
+        fun <A, B> foldLeftNonTailRec(list: List<A>, z: B, fn: (B, A) -> B): B =
+            foldRight(list, z) { b, a -> fn(a, b) }
 
         fun sum(list: List<Int>): Int =
             foldRight(list, 0) { a, b -> a + b }
