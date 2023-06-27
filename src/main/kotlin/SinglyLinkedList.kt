@@ -67,8 +67,12 @@ sealed class List<out A> {
             }
         }
 
+
         fun <A, B> foldLeftNonTailRec(list: List<A>, z: B, fn: (B, A) -> B): B =
             foldRight(list, z) { b, a -> fn(a, b) }
+
+        fun append(a: List<Int>, b: List<Int>): List<Int> =
+            foldLeft(a, b) { a, b -> Cons(b, a) }
 
         fun sum(list: List<Int>): Int =
             foldRight(list, 0) { a, b -> a + b }
