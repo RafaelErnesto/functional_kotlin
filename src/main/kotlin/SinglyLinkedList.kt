@@ -67,7 +67,6 @@ sealed class List<out A> {
             }
         }
 
-
         fun <A, B> foldLeftNonTailRec(list: List<A>, z: B, fn: (B, A) -> B): B =
             foldRight(list, z) { b, a -> fn(a, b) }
 
