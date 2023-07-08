@@ -1,3 +1,4 @@
+
 sealed class List<out A> {
     companion object {
         fun <A> of(vararg a: A): List<A> {
